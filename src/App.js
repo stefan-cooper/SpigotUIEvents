@@ -7,33 +7,28 @@ const App = () => {
   const [notificationsSet, updateNotificationsSet] = useState(new Set());
   const [allNotificationsJson, updateAllNotificationsJson] = useState([]);
   const [latestResponse, setLatestResponse] = useState();
-  const timeInterval = 3000;
+  const timeInterval = 1000;
 
   const [players, setPlayers] = useState({});
 
-  const updateNotifs = (responses) => {
-    responses.forEach((res) =>
-      res.data
-        .filter((notif) => !notificationsSet.has(JSON.parse(notif).id))
-        .forEach((notification) => {
-          const stringified = notification;
-          notificationsSet.add(JSON.parse(notification).id);
-          setLatestResponse(stringified);
-        })
-    );
+  const updateNotifs = (res) => {
+    res.data
+      .filter((notif) => !notificationsSet.has(JSON.parse(notif).id))
+      .forEach((notification) => {
+        const stringified = notification;
+        notificationsSet.add(JSON.parse(notification).id);
+        setLatestResponse(stringified);
+      });
+
     updateNotificationsSet(notificationsSet);
   };
 
   const updateNotifications = () => {
     const timeCheck = new Date().getTime() - timeInterval;
 
-    Promise.all([
-      axios.get(`http://localhost:3001/api/kafka_damage?time=${timeCheck}`),
-      axios.get(`http://localhost:3001/api/kafka_login?time=${timeCheck}`),
-      axios.get(`http://localhost:3001/api/kafka_chat?time=${timeCheck}`),
-      axios.get(`http://localhost:3001/api/kafka_death?time=${timeCheck}`),
-      axios.get(`http://localhost:3001/api/kafka_disconnect?time=${timeCheck}`),
-    ]).then(updateNotifs);
+    axios
+      .get(`http://localhost:3001/api/kafka_all?time=${timeCheck}`)
+      .then(updateNotifs);
   };
 
   useEffect(() => {
