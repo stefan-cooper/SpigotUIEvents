@@ -1,0 +1,22 @@
+.App {
+  text-align: center;
+  overflow-y: scroll;
+  min-height: 100vh;
+  min-width: 100vw;
+}
+
+.heart {
+  width: 3rem;
+  height: 3rem;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
