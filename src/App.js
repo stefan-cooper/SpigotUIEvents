@@ -39,6 +39,7 @@ const App = () => {
         ...players,
         [parsed.player]: {
           health: parsed.health,
+          highlights: parsed.highlights
         },
       });
     }
@@ -77,10 +78,30 @@ const App = () => {
       return jsx.concat(fullHearts, halfHearts, emptyHearts);
     };
 
+    const renderInventoryHighlights = (highlights) => {
+      let jsx = []
+      if (highlights) {
+        if (highlights.includes("GOLDEN_APPLE")) {
+          jsx.push(<img className="invitem" src={require("./assets/GoldenApple.webp")} />)
+        }
+        if (highlights.includes("DIAMOND_SWORD")) {
+          jsx.push(<img className="invitem" src={require("./assets/DiamondSword.webp")} />)
+        }
+        if (highlights.includes("ENCHANTED_GOLDEN_APPLE")) {
+          jsx.push(<img className="invitem" src={require("./assets/EnchantedGoldenApple.webp")} />)
+        }
+        if (highlights.includes("TNT")) {
+          jsx.push(<img className="invitem" src={require("./assets/TNT.webp")} />)
+        }
+      }
+      return <div className="inventory">{jsx}</div>
+    }
+
     return (
       <div>
         <h3>{name}</h3>
         {renderHearts(player.health)}
+        {renderInventoryHighlights(player.highlights)}
       </div>
     );
   };
@@ -89,7 +110,6 @@ const App = () => {
     <>
       <div className="App">
         <header className="App-header">
-          <p>Kafka Minecraft Events</p>
           {JSON.stringify(players) !== "{}" &&
             Object.entries(players).map(([name, player]) =>
               renderPlayer(name, player)

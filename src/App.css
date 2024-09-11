@@ -10,6 +10,19 @@
   height: 3rem;
 }
 
+.inventory {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  width: 30rem;
+  height: 6rem;
+}
+
+.invitem {
+  width: 6rem;
+  height: 6rem;
+}
+
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
